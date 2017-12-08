@@ -1,0 +1,10 @@
+秘密鍵 kenqweb.key も、
+Windows用証明書ファイル kenqweb.pfx も
+パスフレーズは kenqweb
+
+ です。
+
+kenqweb.pfx の内容は以下のコマンドで確認できます。
+openssl pkcs12 -in kenqweb.pfx
+パスフレーズの入力を三回求められますが、
+すべて kenqweb です。
