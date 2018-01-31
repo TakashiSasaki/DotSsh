@@ -8,3 +8,13 @@ pem:
 
 test:
 	echo $(USER); echo $(shell hostname)
+
+hello.p7m:
+	openssl cms -encrypt -in hello.txt -out hello.p7m id_rsa.pem 
+
+cms:
+	openssl cms -cmsout  -print -in hello.p7m
+
+decrypt:
+	openssl cms -decrypt  -in hello.p7m -inkey id_rsa
+
