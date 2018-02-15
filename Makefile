@@ -1,12 +1,12 @@
 .PHONY: all test clean
 
-all: decrypt verify
+all: decrypt verify hello.decrypted
 
 test:
 	echo $(USER); echo $(shell hostname)
 
 clean:
-	rm -f hello.p7m hello.p7s
+	rm -f hello.p7m hello.p7s hello.encrypted hello.decrypted
 
 id_rsa.req:
 	openssl req -new -key id_rsa -subj "/C=JP/ST=Ehime/O=Takashi SASAKI Things/O=SSH keys/OU=$(shell hostname)/OU=Ubuntu on Windows/CN=$(USER)/emailAddress=takashi316@gmail.com" -out id_rsa.req
@@ -28,4 +28,11 @@ hello.p7s: hello.txt id_rsa.pem  id_rsa
 
 verify: id_rsa.pem hello.p7s
 	openssl smime -verify -in hello.p7s -CAfile demoCA/cacert.pem  
+
+hello.encrypted: id_rsa hello.txt
+	openssl rsautl -encrypt -certin -inkey id_rsa.pem -in hello.txt -out hello.encrypted
+
+hello.decrypted: id_rsa hello.encrypted
+	openssl rsautl -decrypt -inkey id_rsa -in hello.encrypted -out hello.decrypted
+
 
