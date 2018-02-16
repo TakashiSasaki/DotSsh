@@ -43,5 +43,5 @@ fingerprint: id_rsa
 	ssh-keygen -l -E SHA512 -f id_rsa 
 
 id_rsa2.req: id_rsa
-	openssl req -new -key id_rsa -config openssl.cnf -out id_rsa2.req
+	openssl req -new -key id_rsa -config req.cnf -out id_rsa2.req
 
