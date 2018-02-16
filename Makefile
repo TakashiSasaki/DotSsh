@@ -9,7 +9,7 @@ clean:
 	rm -f hello.p7m hello.p7s hello.encrypted hello.decrypted id_rsa.req 
 
 id_rsa.req: id_rsa
-	openssl req -new -key id_rsa -subj "/C=JP/ST=Ehime/O=Takashi SASAKI Things/O=SSH keys/OU=$(shell hostname)/OU=Ubuntu on Windows/CN=$(USER)/emailAddress=takashi316@gmail.com" -out id_rsa.req
+	openssl req -new -key id_rsa -subj "/C=JP/ST=Ehime/O=Takashi SASAKI Things/O=SPHERE/OU=$(shell hostname)/OU=Ubuntu on Windows/CN=$(USER)/emailAddress=takashi316@gmail.com" -out id_rsa.req
 
 id_rsa.pem: 
 	openssl ca -in id_rsa.req -out id_rsa.pem -days 36500
@@ -41,4 +41,7 @@ fingerprint: id_rsa
 	ssh-keygen -l -E SHA256 -f id_rsa ;\
 	ssh-keygen -l -E SHA384 -f id_rsa ;\
 	ssh-keygen -l -E SHA512 -f id_rsa 
+
+id_rsa2.req: id_rsa
+	openssl req -new -key id_rsa -config openssl.cnf -out id_rsa2.req
 
