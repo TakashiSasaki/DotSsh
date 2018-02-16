@@ -45,3 +45,6 @@ fingerprint: id_rsa
 id_rsa2.req: id_rsa
 	openssl req -new -key id_rsa -config req.cnf -out id_rsa2.req
 
+id_rsa2.pem: id_rsa2.req
+	openssl ca -in id_rsa2.req -out id_rsa2.pem -config ca.cnf
+
