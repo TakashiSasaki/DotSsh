@@ -1,6 +1,6 @@
 .PHONY: all test clean fingerprint
 
-all: decrypt verify hello.decrypted
+all: decrypt verify hello.decrypted view-id_rsa2.pem view-id_rsa2.req
 
 test:
 	echo $(USER); echo $(shell hostname)
@@ -42,9 +42,16 @@ fingerprint: id_rsa
 	ssh-keygen -l -E SHA384 -f id_rsa ;\
 	ssh-keygen -l -E SHA512 -f id_rsa 
 
-id_rsa2.req: id_rsa
+id_rsa2.req: id_rsa req.cnf
 	openssl req -new -key id_rsa -config req.cnf -out id_rsa2.req
 
-id_rsa2.pem: id_rsa2.req
-	openssl ca -in id_rsa2.req -out id_rsa2.pem -config ca.cnf
+view-id_rsa2.req: id_rsa2.req
+	openssl req -in id_rsa2.req -text | less
+
+id_rsa2.pem: id_rsa2.req ca.cnf
+	openssl ca -in id_rsa2.req -out id_rsa2.pem -verbose -config ca.cnf ;\
+	find -name "id_rsa2.pem" -size 0 -exec rm {} \;
+
+view-id_rsa2.pem: id_rsa2.pem
+	openssl x509 -in id_rsa2.pem -text | less
 
