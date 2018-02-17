@@ -57,7 +57,7 @@ emailAddress_default            = takashi316+ca@gmail.com
 basicConstraints        = CA:true
 keyUsage                = nonRepudiation,digitalSignature,keyEncipherment,dataEncipherment
 subjectAltName          = email:move    
-issuerAltName           = issuer:copy
+issuerAltName           = email:copy
 
 [ v3_ca ]
 subjectKeyIdentifier    = hash

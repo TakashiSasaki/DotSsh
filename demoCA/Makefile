@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean view-cacert2.pem
 
 clean:
 	rm -f cacert2.pem
