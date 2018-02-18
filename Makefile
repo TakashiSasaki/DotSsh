@@ -55,3 +55,9 @@ id_rsa2.pem: id_rsa2.req ca.cnf
 view-id_rsa2.pem: id_rsa2.pem
 	openssl x509 -in id_rsa2.pem -text | less
 
+hello.tsquery: hello.txt tsquery.cnf Makefile
+	openssl ts -query -data hello.txt -text -out hello.tsquery -config tsquery.cnf -cert
+
+view-hello.tsquery: hello.tsquery tsquery.cnf
+	cat hello.tsquery
+
