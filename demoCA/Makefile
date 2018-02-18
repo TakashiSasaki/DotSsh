@@ -1,4 +1,4 @@
-.PHONY: all clean view-cacert2.pem
+.PHONY: all clean view-cacert2.pem view-uuid5 view-tsacert.req view-tsacert.pem
 
 clean:
 	rm -f cacert2.pem
@@ -20,4 +20,11 @@ view-tsacert.req: tsacert.req
 tsacert.pem: 
 	openssl ca -in tsacert.req -out tsacert.pem -config tsacert.cnf ;\
 	  find -name tsacert.pem -size 0 -exec rm {} \;
+
+view-uuid5:
+	./uuid5.py
+
+
+view-tsacert.pem: tsacert.pem
+	openssl x509 -in tsacert.pem -text | less
 
