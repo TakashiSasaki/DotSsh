@@ -9,3 +9,15 @@ cacert2.pem:
 
 view-cacert2.pem: cacert2.pem
 	openssl x509 -in cacert2.pem -text | less
+
+tsacert.req: tsacert.cnf private/tsakey.pem 
+	openssl req -new -key private/tsakey.pem -out tsacert.req -config tsacert.cnf ;\
+	  find . -name "tsacert.req" -size 0 -exec rm -f {} \;
+
+view-tsacert.req: tsacert.req
+	openssl req -in tsacert.req -text | less
+
+tsacert.pem: 
+	openssl ca -in tsacert.req -out tsacert.pem -config tsacert.cnf ;\
+	  find -name tsacert.pem -size 0 -exec rm {} \;
+

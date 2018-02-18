@@ -1,0 +1,85 @@
+HOME                    = .
+RANDFILE                = $ENV::HOME/.rnd
+
+[ ca ]
+default_ca              = CA_default
+
+[ CA_default ]
+dir                     = .
+certs                   = $dir/certs
+crl_dir                 = $dir/crl
+database                = $dir/index.txt
+unique_subject          = $dir/no
+new_certs_dir           = $dir/newcerts
+certificate             = $dir/cacert2.pem
+serial                  = $dir/serial             
+crlnumber               = $dir/crlnumber         
+crl                     = $dir/crl.pem          
+private_key             = $dir/private/cakey.pem
+RANDFILE                = $dir/private/.rand   
+copy_extensions         = copy
+x509_extensions         = usr_cert 
+name_opt                = ca_default
+cert_opt                = ca_default
+default_days            = 36500 
+default_crl_days        = 30    
+default_md              = default
+preserve                = no
+policy                  = policy_match
+
+[ usr_cert ]
+basicConstraints        = CA:FALSE
+extendedKeyUsage        = timeStamping
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer
+#subjectAltName          = email:move
+issuerAltName           = issuer:copy
+
+[ policy_match ]
+countryName             = match
+stateOrProvinceName     = match
+localityName            = optional
+organizationName        = match
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+default_bits            = 2048
+default_keyfile         = private/tsakey.pem
+distinguished_name      = req_distinguished_name
+string_mask             = utf8only
+req_extensions          = v3_req
+
+[ req_distinguished_name ]
+countryName                     = Country Name (2 letter code)
+countryName_default             = JP
+
+stateOrProvinceName             = State or Province Name (full name)
+stateOrProvinceName_default     = Ehime
+
+localityName                    = Locality Name (eg, city)
+localityName_default            = Matsuyama
+
+0.organizationName              = Organization Name (eg, company)
+0.organizationName_default      = Personal Use
+
+1.organizationName              = Second Organization Name (eg, company)
+1.organizationName_default      = TakashiSasaki
+
+0.organizationalUnitName          = Organizational Unit Name (eg, section)
+0.organizationalUnitName_default  = Time Stamping Authority
+
+commonName                      = Common Name (e.g. server FQDN or YOUR name)
+commonName_max                  = 64
+commonName_default              = Takashi SASAKI TSA
+
+emailAddress                    = Email Address
+emailAddress_max                = 64
+emailAddress_default            = takashi316+tsa@gmail.com
+
+[ v3_req ]
+basicConstraints        = CA:false
+extendedKeyUsage        = timeStamping
+subjectAltName          = email:move
+
