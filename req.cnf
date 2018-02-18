@@ -1,7 +1,11 @@
-# This definition stops the following lines choking if HOME isn't
-# defined.
 HOME                    = .
 RANDFILE                = $ENV::HOME/.rnd
+oid_section             = new_oids
+
+[ new_oids ]
+netscape-comment        = 2.16.840.1.113730.13
+testoid1                = 1.2.3.4
+testoid2                = ${testoid1}.5.6
 
 [ req ]
 default_bits            = 2048
@@ -51,5 +55,7 @@ emailAddress_default            = takashi316@gmail.com
 basicConstraints        = CA:true
 keyUsage                = nonRepudiation,digitalSignature,dataEncipherment
 extendedKeyUsage        = clientAuth,codeSigning,emailProtection,timeStamping
-subjectAltName          = email:move    
+subjectAltName          = email:move
+netscape-comment        = ASN1:UTF8String:hello-netscape-comment
+
 
