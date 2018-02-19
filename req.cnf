@@ -1,5 +1,7 @@
 HOME                    = .
 RANDFILE                = $ENV::HOME/.rnd
+HOSTNAME                = $ENV::HOSTNAME
+USER                    = $ENV::USER
 oid_section             = new_oids
 
 [ new_oids ]
@@ -36,9 +38,9 @@ localityName_default            = Matsuyama
 0.organizationalUnitName          = Organizational Unit Name (eg, section)
 0.organizationalUnitName_default  = SSH Key
 1.organizationalUnitName          = Host name (eg, my-PC)
-1.organizationalUnitName_default  = 
+1.organizationalUnitName_default  = ${HOSTNAME}
 2.organizationalUnitName          = User name (eg, testuser01)
-2.organizationalUnitName_default  = 
+2.organizationalUnitName_default  = ${USER}
 
 commonName                      = Common Name (e.g. server FQDN or YOUR name)
 commonName_max                  = 64

@@ -1,3 +1,11 @@
+ifndef HOSTNAME
+	export HOSTNAME=$(shell hostname)
+endif
+
+ifndef USER
+	export USER=$(shell whoami)
+endif
+
 .PHONY: all test clean fingerprint
 
 all: decrypt verify hello.decrypted view-id_rsa2.pem view-id_rsa2.req
@@ -7,12 +15,6 @@ test:
 
 clean:
 	rm -f hello.p7m hello.p7s hello.encrypted hello.decrypted id_rsa.req 
-
-id_rsa.req: id_rsa
-	openssl req -new -key id_rsa -subj "/C=JP/ST=Ehime/O=Takashi SASAKI Things/O=SPHERE/OU=$(shell hostname)/OU=Ubuntu on Windows/CN=$(USER)/emailAddress=takashi316@gmail.com" -out id_rsa.req
-
-id_rsa.pem: 
-	openssl ca -in id_rsa.req -out id_rsa.pem -days 36500
 
 hello.p7m: hello.txt id_rsa.pem
 	openssl cms -encrypt -in hello.txt -out hello.p7m id_rsa.pem 
@@ -42,7 +44,19 @@ fingerprint: id_rsa
 	ssh-keygen -l -E SHA384 -f id_rsa ;\
 	ssh-keygen -l -E SHA512 -f id_rsa 
 
-id_rsa2.req: id_rsa req.cnf
+id_rsa.req: id_rsa
+	openssl req -new -key id_rsa -subj "/C=JP/ST=Ehime/O=Takashi SASAKI Things/O=SPHERE/OU=$(shell hostname)/OU=Ubuntu on Windows/CN=$(USER)/emailAddress=takashi316@gmail.com" -out id_rsa.req
+
+view-id_rsa.req: id_rsa.req
+	openssl req -in id_rsa.req -text | less
+
+id_rsa.pem: 
+	openssl ca -in id_rsa.req -out id_rsa.pem -days 36500
+
+view-id_rsa.pem:
+	openssl x509 -in id_rsa.pem -text | less
+
+id_rsa2.req: id_rsa req.cnf Makefile
 	openssl req -new -key id_rsa -config req.cnf -out id_rsa2.req
 
 view-id_rsa2.req: id_rsa2.req
@@ -61,3 +75,14 @@ hello.tsquery: hello.txt tsquery.cnf Makefile
 view-hello.tsquery: hello.tsquery tsquery.cnf
 	cat hello.tsquery
 
+hello.tsreply: hello.tsquery Makefile tsreply.cnf
+	openssl ts -reply -queryfile hello.tsquery -text -config tsreply.cnf
+
+view-hello.tsreply: hello.tsreply
+	cat hello.tsreply
+
+view-HOSTNAME:
+	echo $(HOSTNAME)
+
+view-USER:
+	echo $(USER)
