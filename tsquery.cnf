@@ -1,0 +1,11 @@
+#oid_section             = new_oids
+
+#[ new_oids ]
+#tsa_policy1             = 2.25.233426837401770292559991393619474392241.100
+
+#[ tsa ]
+
+#default_tsa = tsa_config1       # the default TSA section
+
+#[ tsa_config1 ]
+#default_policy  = tsa_policy1                   # Policy if request did not specify it (optional)

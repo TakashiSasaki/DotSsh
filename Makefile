@@ -69,17 +69,17 @@ id_rsa2.pem: id_rsa2.req ca.cnf
 view-id_rsa2.pem: id_rsa2.pem
 	openssl x509 -in id_rsa2.pem -text | less
 
-hello.tsquery: hello.txt tsquery.cnf Makefile
-	openssl ts -query -data hello.txt -text -out hello.tsquery -config tsquery.cnf -cert
+hello.tsquery: hello.txt tsquery.cnf 
+	openssl ts -query -data hello.txt -out hello.tsquery -config tsquery.cnf
 
 view-hello.tsquery: hello.tsquery tsquery.cnf
-	cat hello.tsquery
+	openssl ts -query -in hello.tsquery -text
 
-hello.tsreply: hello.tsquery Makefile tsreply.cnf
-	openssl ts -reply -queryfile hello.tsquery -text -config tsreply.cnf
+hello.tsreply: hello.tsquery tsreply.cnf
+	openssl ts -reply -queryfile hello.tsquery -out hello.tsreply -config tsreply.cnf
 
 view-hello.tsreply: hello.tsreply
-	cat hello.tsreply
+	openssl ts -reply -in hello.tsreply -text
 
 view-HOSTNAME:
 	echo $(HOSTNAME)

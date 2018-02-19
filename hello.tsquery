@@ -1,9 +1,0 @@
-Version: 1
-Hash Algorithm: sha1
-Message data:
-    0000 - 45 88 01 9f d3 d2 56 7f-30 38 15 db 6a df e4 89   E.....V.08..j...
-    0010 - b2 ee 5f 92                                       .._.
-Policy OID: unspecified
-Nonce: 0xC9E6099E8670CC7E
-Certificate required: yes
-Extensions:

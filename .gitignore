@@ -25,3 +25,5 @@ hello.encrypted
 hello.certs
 id_rsa2.pem
 id_rsa2.req
+hello.tsquery
+hello.tsreply

@@ -29,12 +29,13 @@ policy                  = policy_match
 
 [ usr_cert ]
 basicConstraints        = CA:FALSE
-extendedKeyUsage        = timeStamping
+extendedKeyUsage        = critical,timeStamping
 subjectKeyIdentifier    = hash
 authorityKeyIdentifier  = keyid,issuer
-#subjectAltName          = email:move
+#subjectAltName         = email:move
 issuerAltName           = issuer:copy
-
+keyUsage                = nonRepudiation, digitalSignature
+		        
 [ policy_match ]
 countryName             = match
 stateOrProvinceName     = match

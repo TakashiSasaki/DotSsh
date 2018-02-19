@@ -1,0 +1,36 @@
+HOME                    = .
+RANDFILE                = $ENV::HOME/.rnd
+
+oid_section             = new_oids
+
+[ new_oids ]
+
+testoid1                = 1.2.3.4
+testoid2                = ${testoid1}.5.6
+#tsa_policy1             = 1.2.3.4.1
+tsa_policy1             = 2.25.233426837401770292559991393619474392241.100
+tsa_policy2             = 1.2.3.4.5.6
+tsa_policy3             = 1.2.3.4.5.7
+
+[ tsa ]
+
+default_tsa = tsa_config1       # the default TSA section
+
+[ tsa_config1 ]
+dir             = ./demoCA                      # TSA root directory
+crypto_device   = builtin                       # OpenSSL engine to use for signing
+serial          = $dir/tsaserial                # The current serial number (mandatory)
+certs           = $dir/cacert2.pem              # Certificate chain to include in reply (optional)
+signer_cert     = $dir/tsacert.pem              # The TSA signing certificate (optional)
+signer_key      = $dir/private/tsakey.pem       # The TSA private key (optional)
+#signer_cert    = ./id_rsa2.pem                 # The TSA signing certificate (optional)
+#signer_key      = ./id_rsa
+
+default_policy  = tsa_policy1                   # Policy if request did not specify it (optional)
+#other_policies = tsa_policy2, tsa_policy3      # acceptable policies (optional)
+digests         = md5, sha1                     # Acceptable message digests (mandatory)
+accuracy        = secs:1, millisecs:500, microsecs:100  # (optional)
+clock_precision_digits  = 0     # number of digits after dot. (optional)
+ordering                = no    # Is ordering defined for timestamps? (optional, default: no)
+tsa_name                = yes   # Must the TSA name be included in the reply? (optional, default: no)
+ess_cert_id_chain       = no    # Must the ESS cert id chain be included? (optional, default: no)
