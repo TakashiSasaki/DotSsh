@@ -6,7 +6,7 @@ ifndef USER
 	export USER=$(shell whoami)
 endif
 
-.PHONY: all test clean fingerprint
+.PHONY: all test clean fingerprint oid.csv
 
 all: decrypt verify hello.decrypted view-id_rsa2.pem view-id_rsa2.req
 
@@ -86,3 +86,6 @@ view-HOSTNAME:
 
 view-USER:
 	echo $(USER)
+
+oid.csv:
+	curl "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ09hhOGKnCyL2gkR6pMHQdxlumL7NBAMl0iqMJRkIwrd00HvXUc4aWUwzDndcBdE0WAdBZSHBqstkq/pub?gid=0&single=true&output=csv" -o oid.csv
