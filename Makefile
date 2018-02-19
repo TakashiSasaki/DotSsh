@@ -14,7 +14,7 @@ test:
 	echo $(USER); echo $(shell hostname)
 
 clean:
-	rm -f hello.p7m hello.p7s hello.encrypted hello.decrypted id_rsa.req 
+	rm -f hello.p7m hello.p7s hello.encrypted hello.decrypted hello.tsq hello.tsr
 
 hello.p7m: hello.txt id_rsa.pem
 	openssl cms -encrypt -in hello.txt -out hello.p7m id_rsa.pem 
