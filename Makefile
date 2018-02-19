@@ -70,7 +70,7 @@ view-id_rsa2.pem: id_rsa2.pem
 	openssl x509 -in id_rsa2.pem -text | less
 
 hello.tsq: hello.txt tsq.cnf 
-	openssl ts -query -data hello.txt -out hello.tsq -config tsq.cnf
+	openssl ts -query -data hello.txt -out hello.tsq -config tsq.cnf -policy tsa_policy1
 
 view-hello.tsq: hello.tsq tsq.cnf
 	openssl ts -query -in hello.tsq -text

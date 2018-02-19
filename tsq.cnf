@@ -1,2 +1,10 @@
 # You can create timestamp query without config file.
+# Only the OID section of the config file is used with the -query command. (Optional)  
+# Give openssl ts option -policy tsa_policy1 to activate tsa_policy1.
+# default_policy work only for openssl -reply.
+oid_section = new_oids
+
+[new_oids]
+
+tsa_policy1             = 2.25.233426837401770292559991393619474392241.100
 
