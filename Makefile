@@ -69,17 +69,17 @@ id_rsa2.pem: id_rsa2.req ca.cnf
 view-id_rsa2.pem: id_rsa2.pem
 	openssl x509 -in id_rsa2.pem -text | less
 
-hello.tsquery: hello.txt tsquery.cnf 
-	openssl ts -query -data hello.txt -out hello.tsquery -config tsquery.cnf
+hello.tsq: hello.txt tsq.cnf 
+	openssl ts -query -data hello.txt -out hello.tsq -config tsq.cnf
 
-view-hello.tsquery: hello.tsquery tsquery.cnf
-	openssl ts -query -in hello.tsquery -text
+view-hello.tsq: hello.tsq tsq.cnf
+	openssl ts -query -in hello.tsq -text
 
-hello.tsreply: hello.tsquery tsreply.cnf
-	openssl ts -reply -queryfile hello.tsquery -out hello.tsreply -config tsreply.cnf
+hello.tsr: hello.tsq tsr.cnf
+	openssl ts -reply -queryfile hello.tsq -out hello.tsr -config tsr.cnf
 
-view-hello.tsreply: hello.tsreply
-	openssl ts -reply -in hello.tsreply -text
+view-hello.tsr: hello.tsr
+	openssl ts -reply -in hello.tsr -text
 
 view-HOSTNAME:
 	echo $(HOSTNAME)
