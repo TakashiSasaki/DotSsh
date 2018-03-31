@@ -6,7 +6,7 @@ ifndef USER
 	export USER=$(shell whoami)
 endif
 
-.PHONY: all test clean fingerprint oid.csv
+.PHONY: all test clean fingerprint oid.csv test-rsautl
 
 all: decrypt verify hello.decrypted view-id_rsa2.pem view-id_rsa2.req
 
@@ -31,11 +31,13 @@ hello.p7s: hello.txt id_rsa.pem  id_rsa
 verify: id_rsa.pem hello.p7s
 	openssl smime -verify -in hello.p7s -CAfile demoCA/cacert.pem  
 
-hello.encrypted: id_rsa.pub hello.txt
-	openssl rsautl -encrypt -certin -inkey id_rsa.pem -in hello.txt -out hello.encrypted
-
-hello.decrypted: id_rsa hello.encrypted
+test-rsautl: id_rsa.pub hello.txt
+	openssl rsautl -encrypt -certin -inkey id_rsa.pem -in hello.txt -out hello.encrypted ;\
+	echo 1st round; openssl md5 hello.encrypted ;\
+	openssl rsautl -encrypt -certin -inkey id_rsa.pem -in hello.txt -out hello.encrypted ;\
+	echo 2nd round; openssl md5 hello.encrypted ;\
 	openssl rsautl -decrypt -inkey id_rsa -in hello.encrypted -out hello.decrypted
+	cat hello.decrypted
 
 fingerprint: id_rsa
 	ssh-keygen -l -E MD5 -f id_rsa ;\
